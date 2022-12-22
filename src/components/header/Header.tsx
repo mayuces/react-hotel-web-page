@@ -42,6 +42,15 @@ const Header: React.FC<Props> = ({ type }) => {
     children: 0,
     roomNumber: 1,
   });
+
+  const handelFormat = (newDate: any) => {
+    if (newDate instanceof Date) {
+      return format(newDate, "dd/MM/yyyy");
+    }
+
+    return format(new Date(), "dd/MM/yyyy");
+  };
+
   const handleOption = (name: string, operation: string) => {
     setOptions((prev) => {
       return {
@@ -101,16 +110,10 @@ const Header: React.FC<Props> = ({ type }) => {
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-                {/* <span className="headerSearchText">{`${format(
-                  date[0].startDate,
-                  "dd/MM/yyy"
-                )} to ${format(date[0].endDate, "dd/MM/yyy")}`}</span> */}
-                <span
-                  onClick={() => setOpenDate(!openDate)}
-                  className="headerSearchText"
-                >
-                  date to date
-                </span>
+                <span  onClick={() => setOpenDate(!openDate)}className="headerSearchText">{`${handelFormat(
+                  date[0].startDate
+                )} to ${handelFormat(date[0].endDate)}`}</span>
+
                 {openDate && (
                   <DateRange
                     editableDateInputs={true}

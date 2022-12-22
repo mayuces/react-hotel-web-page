@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/react-date-range": "^1.4.4"
   }
 }

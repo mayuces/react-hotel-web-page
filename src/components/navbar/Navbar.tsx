@@ -7,8 +7,10 @@ const Navbar = () => {
       <div className="navContainer">
         <span className="logo">Hotelbooking</span>
         <div className="navItems">
-          <button className="navButton">Register</button>
-          <button className="navButton">Login</button>
+          <button className="navButton">Home</button>
+          <button className="navButton">Rooms</button>
+          <button className="navButton">Gallery</button>
+          <button className="navButton">Contact</button>
         </div>
       </div>
     </div>
