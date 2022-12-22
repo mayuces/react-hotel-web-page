@@ -15,12 +15,14 @@ import { DateRange, Range } from "react-date-range";
 import { format } from "date-fns";
 import "react-date-range/dist/styles.css"; // main css file
 import "react-date-range/dist/theme/default.css"; // theme css file
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   type?: string;
 }
 
 const Header: React.FC<Props> = ({ type }) => {
+  const [destination, setDestination] = useState("");
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState<Range[]>([
     {
@@ -43,6 +45,8 @@ const Header: React.FC<Props> = ({ type }) => {
     roomNumber: 1,
   });
 
+  const navigate = useNavigate();
+
   const handelFormat = (newDate: any) => {
     if (newDate instanceof Date) {
       return format(newDate, "dd/MM/yyyy");
@@ -58,6 +62,10 @@ const Header: React.FC<Props> = ({ type }) => {
         [name]: operation === "i" ? prev[name] + 1 : prev[name] - 1,
       };
     });
+  };
+
+  const handleSearch = () => {
+    navigate("/hotels", { state: { destination, date, options } });
   };
 
   return (
@@ -106,13 +114,17 @@ const Header: React.FC<Props> = ({ type }) => {
                   type="text"
                   placeholder="Where are you going?"
                   className="headerSearchInput"
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className="headerSearchItem">
                 <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-                <span  onClick={() => setOpenDate(!openDate)}className="headerSearchText">{`${handelFormat(
-                  date[0].startDate
-                )} to ${handelFormat(date[0].endDate)}`}</span>
+                <span
+                  onClick={() => setOpenDate(!openDate)}
+                  className="headerSearchText"
+                >{`${handelFormat(date[0].startDate)} to ${handelFormat(
+                  date[0].endDate
+                )}`}</span>
 
                 {openDate && (
                   <DateRange
@@ -202,7 +214,9 @@ const Header: React.FC<Props> = ({ type }) => {
                 )}
               </div>
               <div className="headerSearchItem">
-                <button className="headerBtn">Search</button>
+                <button className="headerBtn" onClick={handleSearch}>
+                  Search
+                </button>
               </div>
             </div>
           </>
